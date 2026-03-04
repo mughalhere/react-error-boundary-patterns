@@ -1,0 +1,4 @@
+* { box-sizing: border-box; }
+body { font-family: system-ui, sans-serif; margin: 0; padding: 1rem; }
+nav { margin-bottom: 1rem; }
+nav a { margin-right: 1rem; }

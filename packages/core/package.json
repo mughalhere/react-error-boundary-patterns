@@ -1,0 +1,57 @@
+{
+  "name": "@mozia/react-error-boundaries",
+  "version": "1.0.0",
+  "description": "Production-grade React error boundary patterns for SaaS applications",
+  "author": "Muhammad Zia <mughalheree@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://mozia.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mughalhere/react-error-boundary-patterns"
+  },
+  "keywords": [
+    "react",
+    "error-boundary",
+    "error-handling",
+    "sentry",
+    "typescript",
+    "saas"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "test:watch": "vitest"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "jsdom": "^25.0.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@vitest/coverage-v8": "^2.0.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.0.0"
+  },
+  "files": [
+    "dist"
+  ]
+}

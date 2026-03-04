@@ -1,0 +1,22 @@
+{
+  "name": "react-error-boundary-patterns",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-grade React error boundary patterns for SaaS applications",
+  "author": "Muhammad Zia <mughalheree@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "pnpm -r run build",
+    "test": "pnpm -r run test",
+    "typecheck": "pnpm -r run typecheck",
+    "dev": "pnpm --filter demo run dev",
+    "dev:demo": "pnpm --filter demo run dev",
+    "dev:example-01": "pnpm --filter 01-basic-boundary run dev",
+    "dev:example-02": "pnpm --filter 02-global-app-boundary run dev",
+    "dev:example-03": "pnpm --filter 03-sentry-integration run dev"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@9.14.2"
+}
