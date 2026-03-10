@@ -10,12 +10,12 @@ importers:
 
   demo:
     dependencies:
-      '@mozia/react-error-boundaries':
-        specifier: workspace:*
-        version: link:../packages/core
       react:
         specifier: ^18.3.0
         version: 18.3.1
+      react-crash-guard:
+        specifier: workspace:*
+        version: link:../packages/core
       react-dom:
         specifier: ^18.3.0
         version: 18.3.1(react@18.3.1)
@@ -47,12 +47,12 @@ importers:
 
   examples/01-basic-boundary:
     dependencies:
-      '@mozia/react-error-boundaries':
-        specifier: workspace:*
-        version: link:../../packages/core
       react:
         specifier: ^18.3.0
         version: 18.3.1
+      react-crash-guard:
+        specifier: workspace:*
+        version: link:../../packages/core
       react-dom:
         specifier: ^18.3.0
         version: 18.3.1(react@18.3.1)
@@ -75,12 +75,12 @@ importers:
 
   examples/02-global-app-boundary:
     dependencies:
-      '@mozia/react-error-boundaries':
-        specifier: workspace:*
-        version: link:../../packages/core
       react:
         specifier: ^18.3.0
         version: 18.3.1
+      react-crash-guard:
+        specifier: workspace:*
+        version: link:../../packages/core
       react-dom:
         specifier: ^18.3.0
         version: 18.3.1(react@18.3.1)
@@ -106,12 +106,12 @@ importers:
 
   examples/03-sentry-integration:
     dependencies:
-      '@mozia/react-error-boundaries':
-        specifier: workspace:*
-        version: link:../../packages/core
       react:
         specifier: ^18.3.0
         version: 18.3.1
+      react-crash-guard:
+        specifier: workspace:*
+        version: link:../../packages/core
       react-dom:
         specifier: ^18.3.0
         version: 18.3.1(react@18.3.1)

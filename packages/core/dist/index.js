@@ -19,8 +19,7 @@ function useErrorRecoveryContext() {
 function ErrorRecoveryProvider(props) {
   return /* @__PURE__ */ jsxRuntime.jsx(ErrorRecoveryContext.Provider, { value: props.value, children: props.children });
 }
-var MAX_RETRIES = 3;
-var GlobalErrorBoundaryClass = class extends react.Component {
+var ErrorBoundaryInner = class extends react.Component {
   constructor() {
     super(...arguments);
     this.state = {
@@ -36,46 +35,67 @@ var GlobalErrorBoundaryClass = class extends react.Component {
     this.props.registerReset?.(this.reset);
   }
   componentDidCatch(error, errorInfo) {
-    const { reporter, onError } = this.props;
+    const { reporter, onError, boundaryName, routeName, featureName } = this.props;
     const context = {
       componentStack: errorInfo.componentStack ?? void 0,
-      boundaryName: "GlobalErrorBoundary",
-      extra: { retryCount: this.state.retryCount }
+      boundaryName,
+      routeName,
+      featureName,
+      extra: this.props.maxRetries != null && this.props.maxRetries > 0 ? { retryCount: this.state.retryCount } : void 0
     };
     if (reporter) {
       try {
         reporter.report(error, context);
-      } catch (e) {
+      } catch {
       }
     }
     onError?.(error, errorInfo);
+    const maxRetries = this.props.maxRetries ?? 0;
     this.setState((prev) => ({
       error,
       errorInfo,
-      retryCount: Math.min(prev.retryCount + 1, MAX_RETRIES)
+      retryCount: maxRetries > 0 ? Math.min(prev.retryCount + 1, maxRetries) : prev.retryCount
     }));
   }
   render() {
     const { error, retryCount } = this.state;
-    const { children, fallback, showDialog } = this.props;
-    if (error && retryCount <= MAX_RETRIES) {
-      const reset = this.reset;
-      const fallbackContent = typeof fallback === "function" ? fallback(error, reset) : fallback ?? /* @__PURE__ */ jsxRuntime.jsx("div", { role: "alert", children: "Something went wrong. Refresh the page or try again." });
-      const content = showDialog ? /* @__PURE__ */ jsxRuntime.jsx("div", { "data-error-boundary-dialog": true, children: fallbackContent }) : fallbackContent;
-      return /* @__PURE__ */ jsxRuntime.jsx(
-        ErrorRecoveryProvider,
-        {
-          value: { reset, retryCount },
-          children: content
-        }
-      );
+    const {
+      children,
+      fallback,
+      maxRetries = 0,
+      silent,
+      showDialog,
+      useRecoveryProvider,
+      defaultFallbackMessage = "Something went wrong. Refresh the page or try again.",
+      tooManyErrorsMessage = "Too many errors. Please refresh the page.",
+      featureName
+    } = this.props;
+    if (!error) {
+      return children;
     }
-    if (error && retryCount > MAX_RETRIES) {
-      return /* @__PURE__ */ jsxRuntime.jsx("div", { role: "alert", children: "Too many errors. Please refresh the page." });
+    if (silent) {
+      return null;
     }
-    return children;
+    if (maxRetries > 0 && retryCount > maxRetries) {
+      return /* @__PURE__ */ jsxRuntime.jsx("div", { role: "alert", children: tooManyErrorsMessage });
+    }
+    const reset = this.reset;
+    const fallbackContent = typeof fallback === "function" ? fallback(error, reset) : fallback ?? /* @__PURE__ */ jsxRuntime.jsx(
+      "div",
+      {
+        role: "alert",
+        ...featureName ? { "data-feature-error": featureName } : {},
+        children: defaultFallbackMessage
+      }
+    );
+    const content = showDialog ? /* @__PURE__ */ jsxRuntime.jsx("div", { "data-error-boundary-dialog": true, children: fallbackContent }) : fallbackContent;
+    if (useRecoveryProvider) {
+      return /* @__PURE__ */ jsxRuntime.jsx(ErrorRecoveryProvider, { value: { reset, retryCount }, children: content });
+    }
+    return content;
   }
 };
+var MAX_RETRIES = 3;
 var GlobalErrorBoundary = react.forwardRef(function GlobalErrorBoundary2(props, ref) {
   const resetRef = react.useRef();
   react.useImperativeHandle(
@@ -86,96 +106,63 @@ var GlobalErrorBoundary = react.forwardRef(function GlobalErrorBoundary2(props, 
     []
   );
   return /* @__PURE__ */ jsxRuntime.jsx(
-    GlobalErrorBoundaryClass,
+    ErrorBoundaryInner,
     {
+      boundaryName: "GlobalErrorBoundary",
+      maxRetries: MAX_RETRIES,
+      useRecoveryProvider: true,
+      defaultFallbackMessage: "Something went wrong. Refresh the page or try again.",
+      tooManyErrorsMessage: "Too many errors. Please refresh the page.",
       ...props,
       registerReset: (reset) => {
         resetRef.current = reset;
-      }
+      },
+      showDialog: props.showDialog
     }
   );
 });
 var MAX_RETRIES2 = 3;
-var RouteErrorBoundary = class extends react.Component {
-  constructor() {
-    super(...arguments);
-    this.state = {
-      error: null,
-      errorInfo: null,
-      retryCount: 0
-    };
-    this.reset = () => {
-      this.setState({ error: null, errorInfo: null });
-    };
-  }
-  componentDidCatch(error, errorInfo) {
-    const { reporter, routeName } = this.props;
-    const context = {
-      componentStack: errorInfo.componentStack ?? void 0,
+function RouteErrorBoundary({
+  children,
+  routeName,
+  fallback,
+  reporter
+}) {
+  return /* @__PURE__ */ jsxRuntime.jsx(
+    ErrorBoundaryInner,
+    {
       boundaryName: "RouteErrorBoundary",
       routeName,
-      extra: { retryCount: this.state.retryCount }
-    };
-    if (reporter) {
-      try {
-        reporter.report(error, context);
-      } catch {
-      }
+      maxRetries: MAX_RETRIES2,
+      useRecoveryProvider: true,
+      defaultFallbackMessage: `Something went wrong on this page (${routeName}). Try again.`,
+      tooManyErrorsMessage: "Too many errors on this route. Please refresh.",
+      fallback,
+      reporter,
+      children
     }
-    this.setState((prev) => ({
-      error,
-      errorInfo,
-      retryCount: Math.min(prev.retryCount + 1, MAX_RETRIES2)
-    }));
-  }
-  render() {
-    const { error, retryCount } = this.state;
-    const { children, fallback, routeName } = this.props;
-    if (error && retryCount <= MAX_RETRIES2) {
-      const reset = this.reset;
-      const fallbackContent = typeof fallback === "function" ? fallback(error, reset) : fallback ?? /* @__PURE__ */ jsxRuntime.jsxs("div", { role: "alert", children: [
-        "Something went wrong on this page (",
-        routeName,
-        "). Try again."
-      ] });
-      return /* @__PURE__ */ jsxRuntime.jsx(ErrorRecoveryProvider, { value: { reset, retryCount }, children: fallbackContent });
-    }
-    if (error && retryCount > MAX_RETRIES2) {
-      return /* @__PURE__ */ jsxRuntime.jsx("div", { role: "alert", children: "Too many errors on this route. Please refresh." });
-    }
-    return children;
-  }
-};
-var FeatureErrorBoundary = class extends react.Component {
-  constructor() {
-    super(...arguments);
-    this.state = { error: null };
-  }
-  componentDidCatch(error, errorInfo) {
-    const { reporter, featureName } = this.props;
-    const context = {
-      componentStack: errorInfo.componentStack ?? void 0,
+  );
+}
+function FeatureErrorBoundary({
+  children,
+  featureName,
+  fallback,
+  silent,
+  reporter
+}) {
+  return /* @__PURE__ */ jsxRuntime.jsx(
+    ErrorBoundaryInner,
+    {
       boundaryName: "FeatureErrorBoundary",
-      featureName
-    };
-    if (reporter) {
-      try {
-        reporter.report(error, context);
-      } catch {
-      }
+      featureName,
+      silent,
+      defaultFallbackMessage: "This feature encountered an error.",
+      fallback,
+      reporter,
+      children
     }
-    this.setState({ error });
-  }
-  render() {
-    const { error } = this.state;
-    const { children, fallback, silent } = this.props;
-    if (error) {
-      if (silent) return null;
-      return fallback ?? /* @__PURE__ */ jsxRuntime.jsx("div", { role: "alert", "data-feature-error": this.props.featureName, children: "This feature encountered an error." });
-    }
-    return children;
-  }
-};
+  );
+}
 function AsyncErrorBoundary({
   children,
   name,

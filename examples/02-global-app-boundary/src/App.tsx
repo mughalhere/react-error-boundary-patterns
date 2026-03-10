@@ -3,7 +3,7 @@ import {
   GlobalErrorBoundary,
   RouteErrorBoundary,
   ErrorHandlerProvider,
-} from "@mozia/react-error-boundaries";
+} from "react-crash-guard";
 import { HomePage } from "./HomePage";
 import { BrokenPage } from "./BrokenPage";
 

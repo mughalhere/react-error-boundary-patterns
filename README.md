@@ -2,13 +2,13 @@
 
 > Production-grade React error boundary patterns for SaaS applications — with global catching, feature isolation, async error bridging, and pluggable error reporting.
 
-[![npm version](https://img.shields.io/npm/v/@mozia/react-error-boundaries)](https://www.npmjs.com/package/@mozia/react-error-boundaries)
-[![CI](https://github.com/MuhammadZia/react-error-boundary-patterns/actions/workflows/ci.yml/badge.svg)](https://github.com/MuhammadZia/react-error-boundary-patterns/actions)
+[![npm version](https://img.shields.io/npm/v/react-crash-guard)](https://www.npmjs.com/package/react-crash-guard)
+[![CI](https://github.com/mughalhere/react-error-boundary-patterns/actions/workflows/ci.yml/badge.svg)](https://github.com/mughalhere/react-error-boundary-patterns/actions)
 [![Coverage](https://img.shields.io/badge/coverage-%3E80%25-brightgreen)](./packages/core)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)](./packages/core/tsconfig.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-**[Live Demo](https://react-error-boundary-patterns.vercel.app)** · **[npm Package](https://www.npmjs.com/package/@mozia/react-error-boundaries)** · **[Author](https://mozia.dev)**
+**[Live Demo](https://react-error-boundary-patterns.vercel.app)** · **[npm Package](https://www.npmjs.com/package/react-crash-guard)** · **[npm Profile](https://www.npmjs.com/~mughalhere)** · **[Author](https://mozia.dev)**
 
 ---
 
@@ -121,9 +121,9 @@ React error boundaries only catch **render-time** errors. This hook bridges asyn
 ## Installation
 
 ```bash
-npm install @mozia/react-error-boundaries
+npm install react-crash-guard
 # or
-pnpm add @mozia/react-error-boundaries
+pnpm add react-crash-guard
 ```
 
 **Peer dependencies:** React 18+
@@ -136,7 +136,7 @@ pnpm add @mozia/react-error-boundaries
 
 ```tsx
 // src/main.tsx
-import { GlobalErrorBoundary, SentryReporter } from '@mozia/react-error-boundaries';
+import { GlobalErrorBoundary, SentryReporter } from 'react-crash-guard';
 
 const reporter = new SentryReporter({
   dsn: import.meta.env.VITE_SENTRY_DSN,
@@ -159,7 +159,7 @@ root.render(
 
 ```tsx
 // src/router.tsx
-import { RouteErrorBoundary } from '@mozia/react-error-boundaries';
+import { RouteErrorBoundary } from 'react-crash-guard';
 
 function AppRouter() {
   return (
@@ -189,7 +189,7 @@ function AppRouter() {
 
 ```tsx
 // Wrap any component that might fail independently
-import { FeatureErrorBoundary } from '@mozia/react-error-boundaries';
+import { FeatureErrorBoundary } from 'react-crash-guard';
 
 function Dashboard() {
   return (
@@ -209,7 +209,7 @@ function Dashboard() {
 ### 4. Handle async errors with `useErrorHandler`
 
 ```tsx
-import { useErrorHandler } from '@mozia/react-error-boundaries';
+import { useErrorHandler } from 'react-crash-guard';
 
 function CampaignList() {
   const throwError = useErrorHandler();
@@ -227,7 +227,7 @@ function CampaignList() {
 ### 5. Build recovery UI with `useErrorRecovery`
 
 ```tsx
-import { useErrorRecovery } from '@mozia/react-error-boundaries';
+import { useErrorRecovery } from 'react-crash-guard';
 
 function ErrorFallback({ error }: { error: Error }) {
   const { retry, retryCount, isRecovering } = useErrorRecovery({
@@ -254,7 +254,7 @@ function ErrorFallback({ error }: { error: Error }) {
 The `errorClassifier` utility inspects errors and returns structured metadata for smarter fallback decisions:
 
 ```ts
-import { classifyError } from '@mozia/react-error-boundaries';
+import { classifyError } from 'react-crash-guard';
 
 const result = classifyError(error);
 // {
@@ -296,7 +296,7 @@ interface ErrorContext {
 ### Built-in: `SentryReporter`
 
 ```ts
-import { SentryReporter } from '@mozia/react-error-boundaries';
+import { SentryReporter } from 'react-crash-guard';
 
 const reporter = new SentryReporter({
   dsn: 'https://your-dsn@sentry.io/project',
@@ -307,7 +307,7 @@ const reporter = new SentryReporter({
 ### Built-in: `ConsoleReporter`
 
 ```ts
-import { ConsoleReporter } from '@mozia/react-error-boundaries';
+import { ConsoleReporter } from 'react-crash-guard';
 
 // Useful for development and testing
 const reporter = new ConsoleReporter();
@@ -375,7 +375,7 @@ Each example is a standalone Vite app.
 
 ```bash
 # Clone the repo
-git clone https://github.com/MuhammadZia/react-error-boundary-patterns.git
+git clone https://github.com/mughalhere/react-error-boundary-patterns.git
 cd react-error-boundary-patterns
 pnpm install
 

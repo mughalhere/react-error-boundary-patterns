@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, type ReactNode } from "react";
-import type { ErrorReporter } from "@mozia/react-error-boundaries";
+import type { ErrorReporter } from "react-crash-guard";
 
 const DemoReporterContext = createContext<ErrorReporter | null>(null);
 

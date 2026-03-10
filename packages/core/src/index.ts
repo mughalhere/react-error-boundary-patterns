@@ -1,5 +1,5 @@
 /**
- * @mozia/react-error-boundaries
+ * react-crash-guard
  * Production-grade React error boundary patterns for SaaS applications.
  */
 

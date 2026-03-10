@@ -1,5 +1,5 @@
 import * as react from 'react';
-import { ReactNode, Component, ErrorInfo } from 'react';
+import { ReactNode } from 'react';
 import * as react_jsx_runtime from 'react/jsx-runtime';
 
 /**
@@ -106,40 +106,29 @@ interface ErrorBoundaryRef {
     reset: () => void;
 }
 
+/**
+ * Wraps the entire application. Catches all render errors and optionally
+ * reports them. Tracks retry count to prevent infinite re-render loops.
+ *
+ * @public
+ */
 declare const GlobalErrorBoundary: react.ForwardRefExoticComponent<GlobalErrorBoundaryProps & react.RefAttributes<ErrorBoundaryRef>>;
 
-interface RouteState {
-    error: Error | null;
-    errorInfo: ErrorInfo | null;
-    retryCount: number;
-}
 /**
  * Designed to wrap individual React Router v6 routes. Provides route name
  * in context for reporting. When isolate is true, errors do not bubble up.
  *
  * @public
  */
-declare class RouteErrorBoundary extends Component<RouteErrorBoundaryProps, RouteState> {
-    state: RouteState;
-    componentDidCatch(error: Error, errorInfo: ErrorInfo): void;
-    reset: () => void;
-    render(): ReactNode;
-}
+declare function RouteErrorBoundary({ children, routeName, fallback, reporter, }: RouteErrorBoundaryProps): react_jsx_runtime.JSX.Element;
 
-interface FeatureState {
-    error: Error | null;
-}
 /**
  * Lightweight boundary for isolating individual features/widgets.
  * When silent is true, only reports and renders nothing (or null).
  *
  * @public
  */
-declare class FeatureErrorBoundary extends Component<FeatureErrorBoundaryProps, FeatureState> {
-    state: FeatureState;
-    componentDidCatch(error: Error, errorInfo: ErrorInfo): void;
-    render(): ReactNode;
-}
+declare function FeatureErrorBoundary({ children, featureName, fallback, silent, reporter, }: FeatureErrorBoundaryProps): react_jsx_runtime.JSX.Element;
 
 /**
  * Thin wrapper around FeatureErrorBoundary for async/loading boundaries.

@@ -1,5 +1,5 @@
 {
-  "name": "@mozia/react-error-boundaries",
+  "name": "react-crash-guard",
   "version": "1.0.0",
   "description": "Production-grade React error boundary patterns for SaaS applications",
   "author": "Muhammad Zia <mughalheree@gmail.com>",
@@ -8,6 +8,12 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/mughalhere/react-error-boundary-patterns"
+  },
+  "bugs": {
+    "url": "https://github.com/mughalhere/react-error-boundary-patterns/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [
     "react",

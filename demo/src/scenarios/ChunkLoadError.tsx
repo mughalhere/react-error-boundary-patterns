@@ -2,7 +2,7 @@ import {
   FeatureErrorBoundary,
   ErrorHandlerProvider,
   useErrorHandler,
-} from "@mozia/react-error-boundaries";
+} from "react-crash-guard";
 import { useDemoReporter } from "../context/DemoReporterContext";
 
 function ChunkTrigger() {

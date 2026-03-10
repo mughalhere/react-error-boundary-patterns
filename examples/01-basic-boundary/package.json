@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@mozia/react-error-boundaries": "workspace:*",
+    "react-crash-guard": "workspace:*",
     "react": "^18.3.0",
     "react-dom": "^18.3.0"
   },

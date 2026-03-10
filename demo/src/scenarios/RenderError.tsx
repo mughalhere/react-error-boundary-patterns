@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FeatureErrorBoundary } from "@mozia/react-error-boundaries";
+import { FeatureErrorBoundary } from "react-crash-guard";
 import { useDemoReporter } from "../context/DemoReporterContext";
 
 function ThrowsWhenTriggered({ trigger }: { trigger: boolean }) {

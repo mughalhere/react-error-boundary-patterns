@@ -2,7 +2,7 @@
 
 ## Overview
 
-`@mozia/react-error-boundaries` provides a layered error boundary system for React 18+ applications:
+`react-crash-guard` provides a layered error boundary system for React 18+ applications:
 
 1. **GlobalErrorBoundary** — Root-level catch for the entire app. Supports pluggable reporters (e.g. Sentry), function fallbacks with `(error, reset)`, and retry limits to avoid infinite loops.
 

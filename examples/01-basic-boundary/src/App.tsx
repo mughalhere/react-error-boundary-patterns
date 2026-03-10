@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FeatureErrorBoundary } from "@mozia/react-error-boundaries";
+import { FeatureErrorBoundary } from "react-crash-guard";
 
 function BrokenWidget({ shouldThrow }: { shouldThrow: boolean }) {
   if (shouldThrow) throw new Error("Intentional render error for demo.");

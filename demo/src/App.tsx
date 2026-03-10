@@ -5,8 +5,8 @@ import {
   ErrorHandlerProvider,
   classifyError,
   serializeError,
-} from "@mozia/react-error-boundaries";
-import type { ErrorContext } from "@mozia/react-error-boundaries";
+} from "react-crash-guard";
+import type { ErrorContext } from "react-crash-guard";
 import { DemoReporterProvider } from "./context/DemoReporterContext";
 import { Layout } from "./components/Layout";
 import { ErrorDisplay } from "./components/ErrorDisplay";

@@ -4,7 +4,7 @@ import {
   SentryReporter,
   ErrorHandlerProvider,
   useErrorHandler,
-} from "@mozia/react-error-boundaries";
+} from "react-crash-guard";
 
 const sentryDsn = import.meta.env.VITE_SENTRY_DSN as string | undefined;
 const reporter = sentryDsn

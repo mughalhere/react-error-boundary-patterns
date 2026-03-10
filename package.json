@@ -1,7 +1,7 @@
 {
   "name": "react-error-boundary-patterns",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
   "description": "Production-grade React error boundary patterns for SaaS applications",
   "author": "Muhammad Zia <mughalheree@gmail.com>",
   "license": "MIT",
